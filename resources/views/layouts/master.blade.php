@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,14 +10,14 @@
 
 	<!-- Global stylesheets -->
 	{{-- <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css"> --}}
-    <link href="{{asset('global_assets/css/icons/icomoon/styles.css')}}" rel="stylesheet" type="text/css">
+	<link href="{{asset('global_assets/css/icons/icomoon/styles.css')}}" rel="stylesheet" type="text/css">
 	<link href="{{asset('assets/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css">
 	<link href="{{asset('assets/css/bootstrap_limitless.min.css')}}" rel="stylesheet" type="text/css">
 	<link href="{{asset('assets/css/layout.min.css')}}" rel="stylesheet" type="text/css">
 	<link href="{{asset('assets/css/components.min.css')}}" rel="stylesheet" type="text/css">
 	<link href="{{asset('assets/css/colors.min.css')}}" rel="stylesheet" type="text/css">
 	{{-- <link href="/assets/css/sweetalert2.min.css" rel="stylesheet" type="text/css"> --}}
-    @yield('styles')
+	@yield('styles')
 	<!-- /global stylesheets -->
 
 	<!-- Core JS files -->
@@ -28,17 +29,17 @@
 	<script src="{{asset('global_assets/js/plugins/loaders/blockui.min.js')}}"></script>
 	<!-- /core JS files -->
 
-    <!-- Theme JS files -->
-    @yield('scripts')
+	<!-- Theme JS files -->
+	@yield('scripts')
 	<script src="{{asset('assets/js/app.js')}}"></script>
-    <!-- /theme JS files -->
-    <script>
-        $.ajaxSetup({
+	<!-- /theme JS files -->
+	<script>
+		$.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         })
-    </script>
+	</script>
 
 </head>
 
@@ -65,26 +66,21 @@
 		<div class="collapse navbar-collapse" id="navbar-mobile">
 			<ul class="navbar-nav">
 				<li class="nav-item">
-					{{-- <a href="#" class="navbar-nav-link sidebar-control sidebar-main-toggle d-none d-md-block">
+					<a href="#" class="navbar-nav-link sidebar-control sidebar-main-toggle d-none d-md-block">
 						<i class="icon-paragraph-justify3"></i>
-					</a> --}}
+					</a>
 				</li>
 			</ul>
 
 			<ul class="navbar-nav ml-auto">
 
 				<li class="nav-item dropdown dropdown-user">
-					<a href="#" class="navbar-nav-link d-flex align-items-center dropdown-toggle" data-toggle="dropdown">
-						{{-- <img src="../../../../global_assets/images/image.png" class="rounded-circle mr-2" height="34" alt=""> --}}
+					<a href="#" class="navbar-nav-link d-flex align-items-center dropdown-toggle"
+						data-toggle="dropdown">
 						<span>{{Auth::user()->username}}</span>
 					</a>
 
 					<div class="dropdown-menu dropdown-menu-right">
-						{{-- <a href="#" class="dropdown-item"><i class="icon-user-plus"></i> My profile</a>
-						<a href="#" class="dropdown-item"><i class="icon-coins"></i> My balance</a>
-						<a href="#" class="dropdown-item"><i class="icon-comment-discussion"></i> Messages <span class="badge badge-pill bg-blue ml-auto">58</span></a>
-						<div class="dropdown-divider"></div>
-						<a href="#" class="dropdown-item"><i class="icon-cog5"></i> Account settings</a> --}}
 						<a href="{{url('/logout')}}" class="dropdown-item"><i class="icon-switch2"></i> Logout</a>
 					</div>
 				</li>
@@ -130,26 +126,34 @@
 							</a>
 						</li>
 						@permission('access_user')
-                        <li class="nav-item">
-                            <a href="{{ route('user.index') }}" class="nav-link">
+						<li class="nav-item">
+							<a href="{{ route('user.index') }}" class="nav-link">
 								<i class="icon-user"></i>
 								<span>User Management</span>
 							</a>
-                        </li>
+						</li>
 						@endpermission
 						@permission('access_role')
 						<li class="nav-item">
-                            <a href="{{ route('role.index') }}" class="nav-link">
+							<a href="{{ route('role.index') }}" class="nav-link">
 								<i class="icon-key"></i>
 								<span>User Role Management</span>
 							</a>
 						</li>
 						@endpermission
 						@permission('access_user_branch')
-                        <li class="nav-item">
+						<li class="nav-item">
 							<a href="{{route('user_branch.index')}}" class="nav-link">
 								<i class="icon-users"></i>
 								<span>Branch User Management</span>
+							</a>
+						</li>
+						@endpermission
+						@permission('access_user_branch')
+						<li class="nav-item">
+							<a href="{{route('customer_service.index')}}" class="nav-link">
+								<i class="icon-users"></i>
+								<span>Customer Service</span>
 							</a>
 						</li>
 						@endpermission
@@ -162,21 +166,24 @@
 						</li>
 						@endpermission
 						@permission('access_report')
-						<li class="nav-item">
-								<a href="{{route('report.index')}}" class="nav-link">
-									<i class="icon-books"></i>
-									<span>Report</span>
-								</a>
-							</li>
+						<li class="nav-item nav-item-submenu">
+							<a href="#" class="nav-link"><i class="icon-books"></i> <span>Report</span></a>
+							<ul class="nav nav-group-sub" data-submenu-title="Layouts">
+								<li class="nav-item"><a href="{{route('report.index')}}" class="nav-link">Branch
+										Report</a></li>
+								<li class="nav-item"><a href="{{route('report_user.index')}}" class="nav-link">Customer
+										Service Report</a></li>
+							</ul>
+						</li>
 						<!-- /main -->
 						@endpermission
 						@permission('access_log')
 						<li class="nav-item">
-								<a href="{{route('log.index')}}" class="nav-link">
-									<i class="icon-list3"></i>
-									<span>Log</span>
-								</a>
-							</li>
+							<a href="{{route('log.index')}}" class="nav-link">
+								<i class="icon-list3"></i>
+								<span>Log</span>
+							</a>
+						</li>
 						<!-- /main -->
 						@endpermission
 					</ul>
@@ -185,14 +192,14 @@
 
 			</div>
 			<!-- /sidebar content -->
-			
+
 		</div>
 		<!-- /main sidebar -->
 
 
 		<!-- Main content -->
 		<div class="content-wrapper">
-            @yield('content')
+			@yield('content')
 		</div>
 		<!-- /main content -->
 
@@ -200,7 +207,8 @@
 	<!-- /page content -->
 	@stack('scriptcode')
 	@section('globaldatatables')
-    	@include('global.datatables')
+	@include('global.datatables')
 	@show
 </body>
+
 </html>

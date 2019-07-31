@@ -20,15 +20,15 @@ return [
         'default' => [
             'auto_connect' => env('LDAP_AUTO_CONNECT', false),
             'connection' => Adldap\Connections\Ldap::class,
-            'settings' => [   
-                // replace this line:
-                'schema' => Adldap\Schemas\ActiveDirectory::class,  
+            'settings' => [
+                'schema'    =>  Adldap\Schemas\OpenLDAP::class,
+                // 'schema' => Adldap\Schemas\ActiveDirectory::class,
                 'account_prefix' => env('LDAP_ACCOUNT_PREFIX', ''),
                 'account_suffix' => env('LDAP_ACCOUNT_SUFFIX', ''),
-                'hosts' => explode(' ', env('LDAP_HOSTS', 'star.dnroot.net')),
+                'hosts' => explode(' ', env('LDAP_HOSTS', 'ldap.forumsys.com')),
                 'port' => env('LDAP_PORT', 389),
                 'timeout' => env('LDAP_TIMEOUT', 5),
-                'base_dn' => env('LDAP_BASE_DN', 'dc=star,dc=dnroot,dc=net'),
+                'base_dn' => env('LDAP_BASE_DN', 'dc=example,dc=com'),
                 'username' => env('LDAP_ADMIN_USERNAME', ''),
                 'password' => env('LDAP_ADMIN_PASSWORD', ''),
                 'follow_referrals' => env('LDAP_FOLLOW_REFERRALS', false),

@@ -7,52 +7,53 @@
 @endsection
 
 @section('scripts')
-    <script type="text/javascript" src="/global_assets/js/plugins/tables/datatables/datatables.min.js"></script>
-    <script type="text/javascript" src="/global_assets/js/plugins/tables/datatables/extensions/select.min.js"></script>
-    <script type="text/javascript" src="/global_assets/js/plugins/forms/selects/select2.min.js"></script>
-    <script type="text/javascript" src="/global_assets/js/plugins/notifications/sweet_alert.min.js"></script>
-    <script type="text/javascript" src="/global_assets/js/plugins/forms/styling/uniform.min.js"></script>
-    <script type="text/javascript" src="/global_assets/js/plugins/ui/moment/moment.min.js"></script>
-    <script type="text/javascript" src="/custom/numeral.min.js"></script>
-    <script type="text/javascript" src="/custom/sum().js"></script>
-    <script type="text/javascript" src="/custom/datatables.js"></script>
-    <script type="text/javascript" src="/custom/daterange/daterangepicker.js"></script>
+<script type="text/javascript" src="/global_assets/js/plugins/tables/datatables/datatables.min.js"></script>
+<script type="text/javascript" src="/global_assets/js/plugins/tables/datatables/extensions/select.min.js"></script>
+<script type="text/javascript" src="/global_assets/js/plugins/forms/selects/select2.min.js"></script>
+<script type="text/javascript" src="/global_assets/js/plugins/notifications/sweet_alert.min.js"></script>
+<script type="text/javascript" src="/global_assets/js/plugins/forms/styling/uniform.min.js"></script>
+<script type="text/javascript" src="/global_assets/js/plugins/ui/moment/moment.min.js"></script>
+<script type="text/javascript" src="/custom/numeral.min.js"></script>
+<script type="text/javascript" src="/custom/sum().js"></script>
+<script type="text/javascript" src="/custom/datatables.js"></script>
+<script type="text/javascript" src="/custom/daterange/daterangepicker.js"></script>
 @endsection
 
 @section('content')
 
-   <!-- Page header -->
-        <div class="page-header page-header-light">
-            <div class="page-header-content header-elements-md-inline">
-                <div class="page-title d-flex">
-                    <h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Report</span> - Survey</h4>
-                    <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
-                </div>
-
-                <div class="header-elements d-none">
-                    {{-- <a href="{{route('Report::export')}}" class="btn btn-labeled btn-labeled-left bg-success">Export <b><i class="icon-file-spreadsheet"></i></b></a> --}}
-                </div>
-            </div>
-
-            <div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
-                <div class="d-flex">
-                    <div class="breadcrumb">
-                        <a href="index.html" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
-                        <a href="#" class="breadcrumb-item">Report</a>
-                        <span class="breadcrumb-item active">Survey</span>
-                    </div>
-
-                    <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
-                </div>
-            </div>
+<!-- Page header -->
+<div class="page-header page-header-light">
+    <div class="page-header-content header-elements-md-inline">
+        <div class="page-title d-flex">
+            <h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Report</span> - Survey</h4>
+            <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
         </div>
-	<!-- /page header -->
 
-    <!-- Main content -->
-    <div class="content">
-        <div class="card">
-            <table class="table table-hover table-bordered table-sm datatable-select-checkbox" id="report-table">
-                <thead>
+        <div class="header-elements d-none">
+            {{-- <a href="{{route('Report::export')}}" class="btn btn-labeled btn-labeled-left bg-success">Export <b><i
+                    class="icon-file-spreadsheet"></i></b></a> --}}
+        </div>
+    </div>
+
+    <div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
+        <div class="d-flex">
+            <div class="breadcrumb">
+                <a href="index.html" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
+                <a href="#" class="breadcrumb-item">Report</a>
+                <span class="breadcrumb-item active">Survey</span>
+            </div>
+
+            <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
+        </div>
+    </div>
+</div>
+<!-- /page header -->
+
+<!-- Main content -->
+<div class="content">
+    <div class="card">
+        <table class="table table-hover table-bordered table-sm datatable-select-checkbox" id="report-table">
+            <thead>
                 <tr>
                     <th>Branch Code</th>
                     <th>Branch Name</th>
@@ -61,25 +62,25 @@
                     <th>Puas</th>
                     <th>Total</th>
                 </tr>
-                </thead>
-                <tfoot>
-                    <tr>
-                        <th colspan="2" style="text-align: left">Total</th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                    </tfoot>
-            </table>
-        </div>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th colspan="2" style="text-align: left">Total</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </tfoot>
+        </table>
     </div>
-    <!-- /main content -->
+</div>
+<!-- /main content -->
 
 @endsection
 @push('scriptcode')
 <script type="text/javascript">
-var table = $('#report-table').DataTable({
+    var table = $('#report-table').DataTable({
         order: [1, 'desc'],
         dom: '<"datatable-header"fl><"datatable-scroll datatable-scroll-wrap"t><"datatable-footer"ip>',
         ajax: {
@@ -133,11 +134,20 @@ var table = $('#report-table').DataTable({
 
     $('#date-from').daterangepicker({
         opens: 'right',
+        autoUpdateInput: false,
         locale: {
             format: 'DD MMM YYYY H:mm'
         }
     }, function(start, end, label) {
         console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+    });
+
+    $('input[name="datefrom"]').on('apply.daterangepicker', function(ev, picker) {
+      $(this).val(picker.startDate.format('DD MMM YYYY') + ' - ' + picker.endDate.format('DD MMM YYYY'));
+    });
+
+    $('input[name="datefrom"]').on('cancel.daterangepicker', function(ev, picker) {
+        $(this).val('');
     });
 
     $('#search').on('click', function(e) {
@@ -151,5 +161,5 @@ var table = $('#report-table').DataTable({
 </script>
 @endpush
 @section('globaldatatables')
-    @include('global.datatables-report')
+@include('global.datatables-report')
 @endsection

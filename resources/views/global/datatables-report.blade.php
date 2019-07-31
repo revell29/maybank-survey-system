@@ -7,14 +7,6 @@
                 this.checked ? table.rows().select() : table.rows().deselect();
             });
     
-            // Add options menu to header
-            // $(".dataTables_filter").prepend("<select class='select' id='table-action'>" +
-            //         "<option value='0'>Select Action</option>" +
-            //         "<option value='2' disabled>Delete</option>" +
-            //         @if(Auth::user()->username == 'superadmin')"<option value='3' disabled>@lang('datatable.delete')</option>" +@endif
-            //         "</select>"
-            // );
-    
             setSelect2ForAction();
             function setSelect2ForAction() {
                 $(".dataTables_filter select").select2({

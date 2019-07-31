@@ -35,80 +35,89 @@
 }
 
 input.supplier {
-    border:none;
+    border: none;
 }
 
 .selected {
     background-color: #de7 !important;
 }
 
-input[type="radio"] { 
+input[type="radio"] {
     position: absolute;
     opacity: 0;
     width: 0;
     height: 0;
-    }
+}
 
-    .image-emot {
-        height: 220px;
-        width: 220px;
-        max-width: 100%;
-        padding: 20px;
-    }
+.image-emot {
+    height: 220px;
+    width: 220px;
+    max-width: 100%;
+    padding: 20px;
+}
 
-    label img{
-        pointer-events: none;
-        
-    }
-    label{
-        display: inline-block;
-    }
-  
-    /* IMAGE STYLES */
-   input[type="radio"] + .image-emot {
+label img {
+    pointer-events: none;
+
+}
+
+label {
+    display: inline-block;
+}
+
+/* IMAGE STYLES */
+input[type="radio"]+.image-emot {
     cursor: pointer;
-    }
+}
 
-    .image-emot:hover{
-        cursor: pointer;
-    }
+.image-emot:hover {
+    cursor: pointer;
+}
 
-    .title-survei {
-        text-align: center;
-        padding: 0px;
-    }
-    .title-survei h1 {
-        font-size: 8em;
-        line-height: 1em;
-    }
-    .title-survei label {
-        font-size: 2em;
-        font-weight: bold;
-    }
-    .footer-title {
-        font-style: italic;
-    },
-    .padding {
-        padding: 10px;
-    }
-    .thanks {
-        margin-top: 15%;
-    }
-    .img-responsive {
-        height: 20%;
-    }
-    .footer {
-        bottom: 15px;
-        position: absolute;
-    }
-    .btn-logout {
-        background-color: Transparent;
-        background-repeat:no-repeat;
-        border: none;
-        cursor:pointer;
-        overflow: hidden;
-        height: 20px;
-        width: 20px;
-        outline:none;
-    }
+.title-survei {
+    text-align: center;
+    padding: 0px;
+}
 
+.title-survei h1 {
+    font-size: 8em;
+    line-height: 1em;
+}
+
+.title-survei label {
+    font-size: 2em;
+    font-weight: bold;
+}
+
+.footer-title {
+    font-style: italic;
+}
+
+,
+.padding {
+    padding: 10px;
+}
+
+.thanks {
+    margin-top: 15%;
+}
+
+.img-responsive {
+    height: 20%;
+}
+
+.footer {
+    bottom: 15px;
+    position: absolute;
+}
+
+.btn-logout {
+    background-color: Transparent;
+    background-repeat: no-repeat;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+    height: 20px;
+    width: 20px;
+    outline: none;
+}

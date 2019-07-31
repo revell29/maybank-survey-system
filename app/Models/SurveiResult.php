@@ -15,4 +15,9 @@ class SurveiResult extends Model
     {
         return $this->belongsTo(Branches::class, 'branch_id');
     }
+
+    public function user()
+    {
+        return $this->belongsTo(CustomerService::class, 'teller_id', 'id');
+    }
 }

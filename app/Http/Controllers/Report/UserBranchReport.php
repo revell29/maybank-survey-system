@@ -98,24 +98,24 @@ class UserBranchReport extends Controller
     public function data(Request $request)
     {
         $data = \App\Models\CustomerService::with('branch');
-    
+
         if ($request->has('datefrom') && $request->datefrom != null) {
             $date = explode(' - ', $request->input('datefrom'));
             $dd1 = $date[0];
             $dd2 = $date[1];
             $date_1 = Carbon::parse($dd1)->format('Y-m-d H:i');
             $date_2 = Carbon::parse($dd2)->format('Y-m-d H:i');
-            $data = $data->with(['survey_branch' => function ($q) use ($date_1,$date_2) {
-                $q->whereBetween('created_at', [$date_1,$date_2])
-                        ->select(
-                            'teller_id',
-                            DB::raw('SUM(level_1) as lv1'),
-                            DB::raw('SUM(level_2) as lv2'),
-                            DB::raw('SUM(level_3) as lv3'),
-                            DB::raw('COUNT(level_1)+COUNT(level_2)+COUNT(level_3) as total')
-                        )
-                        ->whereNotNull('teller_id')
-                        ->groupBy('teller_id');
+            $data = $data->with(['survey_branch' => function ($q) use ($date_1, $date_2) {
+                $q->whereBetween('created_at', [$date_1, $date_2])
+                    ->select(
+                        'teller_id',
+                        DB::raw('SUM(level_1) as lv1'),
+                        DB::raw('SUM(level_2) as lv2'),
+                        DB::raw('SUM(level_3) as lv3'),
+                        DB::raw('COUNT(level_1)+COUNT(level_2)+COUNT(level_3) as total')
+                    )
+                    ->whereNotNull('teller_id')
+                    ->groupBy('teller_id');
             }])->whereHas('survey_branch', function ($f) {
                 $f->whereNotNull('teller_id');
             })->get();
@@ -128,14 +128,14 @@ class UserBranchReport extends Controller
                     DB::raw('SUM(level_3) as lv3'),
                     DB::raw('COUNT(level_1)+COUNT(level_2)+COUNT(level_3) as total')
                 )
-                ->whereNotNull('teller_id')
-                ->whereDate('created_at', Carbon::now())->whereNotNull('branch_id')
-                ->groupBy('teller_id');
+                    ->whereNotNull('teller_id')
+                    ->whereDate('created_at', Carbon::now())->whereNotNull('branch_id')
+                    ->groupBy('teller_id');
             }])->whereHas('survey_branch', function ($f) {
                 $f->whereNotNull('teller_id');
             })->get();
         }
-        
+
         return DataTables::of($data)
             ->addColumn('total', function ($item) {
                 if ($item->survey_branch) {
@@ -174,13 +174,13 @@ class UserBranchReport extends Controller
                 }
             })
             ->editColumn('name', function ($q) {
-                return '<a href="'.route('ReportUser::detail', $q->id).'">'.$q->name.'</a>';
+                return '<a href="' . route('ReportUser::detail', $q->id) . '">' . $q->name . '</a>';
             })
             ->escapeColumns([])
             ->make(true);
     }
 
-    
+
     /**
      *  Views Detail UserBranch
      */
@@ -204,11 +204,11 @@ class UserBranchReport extends Controller
 
         if ($request->has('datefrom')) {
             $date = explode(' - ', $request->input('datefrom'));
-            $dd1 = $date[0].'0:00';
-            $dd2 = $date[1].'23:59';
+            $dd1 = $date[0] . '0:00';
+            $dd2 = $date[1] . '23:59';
             $date_1 = Carbon::parse($dd1)->format('Y-m-d H:i');
             $date_2 = Carbon::parse($dd2)->format('Y-m-d H:i');
-            $data = $data->whereBetween('created_at', [$date_1,$date_2])->orderBy('created_at', 'DESC')->get();
+            $data = $data->whereBetween('created_at', [$date_1, $date_2])->orderBy('created_at', 'DESC')->get();
         } else {
             $data = $data->whereDate('created_at', Carbon::now())->orderBy('created_at', 'DESC')->get();
         }
@@ -246,12 +246,12 @@ class UserBranchReport extends Controller
                 'Tidak Puas' => $s->level1,
                 'Biasa' => $s->level2,
                 'Puas' => $s->level3,
-                'total' => $s->level1+$s->level2+$s->level3
+                'total' => $s->level1 + $s->level2 + $s->level3
             ]);
         }
 
         $excel = \Excel::create('Report Feedback - ' . date('d F Y'), function ($excel) use ($data) {
-            $excel->setTitle('Report Feedback - '.ate('d F Y'));
+            $excel->setTitle('Report Feedback - ' . ate('d F Y'));
             $excel->setCreator(Auth::user()->username)->setCompany('Maybank');
 
             $excel->sheet('Feebeack', function ($sheet) use ($data) {
@@ -272,7 +272,7 @@ class UserBranchReport extends Controller
         });
 
         $excel->export('xlsx');
-        \LogActivity::addToLog(Auth::user()->username.' exporting report (excel)');
+        \LogActivity::addToLog(Auth::user()->username . ' exporting report (excel)');
     }
 
     private function exportDetail($branch, $from)
@@ -283,15 +283,15 @@ class UserBranchReport extends Controller
 
         if ($from) {
             $date = explode(' - ', $from);
-            $dd1 = $date[0].'00:00';
-            $dd2 = $date[1].'23:59';
+            $dd1 = $date[0] . '00:00';
+            $dd2 = $date[1] . '23:59';
             $date_1 = Carbon::parse($dd1)->format('Y-m-d H:i');
             $date_2 = Carbon::parse($dd2)->format('Y-m-d H:i');
-            $data = $data->whereBetween('created_at', [$date_1,$date_2])->orderBy('created_at', 'DESC')->get();
+            $data = $data->whereBetween('created_at', [$date_1, $date_2])->orderBy('created_at', 'DESC')->get();
         } else {
             $data = $data->whereDate('created_at', Carbon::now())->orderBy('created_at', 'DESC')->get();
         }
-        
+
         foreach ($data as $s) {
             array_push($data1, [
                 'NIK' => $s->user->nik,
@@ -326,7 +326,7 @@ class UserBranchReport extends Controller
         });
 
         $excel->export('xlsx');
-        \LogActivity::addToLog(Auth::user()->username.' exporting report (excel)');
+        \LogActivity::addToLog(Auth::user()->username . ' exporting report (excel)');
     }
 
     /**
@@ -335,24 +335,24 @@ class UserBranchReport extends Controller
     private function exportDetailIndex($from)
     {
         $data = \App\Models\CustomerService::with('branch');
-    
+
         if ($from) {
             $date = explode(' - ', $from);
-            $dd1 = $date[0].'00:00';
-            $dd2 = $date[1].'23:59';
+            $dd1 = $date[0] . '00:00';
+            $dd2 = $date[1] . '23:59';
             $date_1 = Carbon::parse($dd1)->format('Y-m-d H:i');
             $date_2 = Carbon::parse($dd2)->format('Y-m-d H:i');
-            $data = $data->with(['survey_branch' => function ($q) use ($date_1,$date_2) {
-                $q->whereBetween('created_at', [$date_1,$date_2])
-                            ->select(
-                                'teller_id',
-                                DB::raw('SUM(level_1) as lv1'),
-                                DB::raw('SUM(level_2) as lv2'),
-                                DB::raw('SUM(level_3) as lv3'),
-                                DB::raw('COUNT(level_1)+COUNT(level_2)+COUNT(level_3) as total')
-                            )
-                            ->whereNotNull('teller_id')
-                            ->groupBy('teller_id');
+            $data = $data->with(['survey_branch' => function ($q) use ($date_1, $date_2) {
+                $q->whereBetween('created_at', [$date_1, $date_2])
+                    ->select(
+                        'teller_id',
+                        DB::raw('SUM(level_1) as lv1'),
+                        DB::raw('SUM(level_2) as lv2'),
+                        DB::raw('SUM(level_3) as lv3'),
+                        DB::raw('COUNT(level_1)+COUNT(level_2)+COUNT(level_3) as total')
+                    )
+                    ->whereNotNull('teller_id')
+                    ->groupBy('teller_id');
             }])->whereHas('survey_branch', function ($f) {
                 $f->whereNotNull('teller_id');
             })->orderBy('created_at', 'DESC')->get();
@@ -364,7 +364,7 @@ class UserBranchReport extends Controller
                     DB::raw('SUM(level_2) as lv2'),
                     DB::raw('SUM(level_3) as lv3'),
                     DB::raw('COUNT(level_1)+COUNT(level_2)+COUNT(level_3) as total')
-                    )
+                )
                     ->whereNotNull('teller_id')
                     ->whereDate('created_at', Carbon::now())->whereNotNull('teller_id')
                     ->groupBy('teller_id');
@@ -372,20 +372,20 @@ class UserBranchReport extends Controller
                 $f->whereNotNull('teller_id');
             })->orderBy('created_at', 'DESC')->get();
         }
-        
+
         $data1 = [];
         foreach ($data as $s) {
             foreach ($s->survey_branch as $d) {
                 array_push($data1, [
-                'NIK' => $s->nik,
-                'Name' => $s->name,
-                'Role' => $s->role,
-                'Branch' => $s->branch->branch_name,
-                'Tidak Puas' => $d->lv1,
-                'Biasa' => $d->lv2,
-                'Puas' => $d->lv3,
-                'Total' => $d->total
-            ]);
+                    'NIK' => $s->nik,
+                    'Name' => $s->name,
+                    'Role' => $s->role,
+                    'Branch' => $s->branch->branch_name,
+                    'Tidak Puas' => $d->lv1,
+                    'Biasa' => $d->lv2,
+                    'Puas' => $d->lv3,
+                    'Total' => $d->total
+                ]);
             }
         }
 
@@ -411,30 +411,30 @@ class UserBranchReport extends Controller
         });
 
         $excel->export('xlsx');
-        \LogActivity::addToLog(Auth::user()->username.' exporting report (excel)');
+        \LogActivity::addToLog(Auth::user()->username . ' exporting report (excel)');
     }
 
     public function exportSelect(Request $request)
     {
         if ($request->has('pdf')) {
-            $id= $request->teller_id;
+            $id = $request->teller_id;
             $branch = CustomerService::find($id);
             $data = SurveiResult::query()->with('user')->where('teller_id', $id);
             $date1 = $request->datefrom;
 
             if ($request->has('datefrom') && $request->datefrom != null) {
                 $date = explode(' - ', $request->input('datefrom'));
-                $dd1 = $date[0].'00:00';
-                $dd2 = $date[1].'23:59';
+                $dd1 = $date[0] . '00:00';
+                $dd2 = $date[1] . '23:59';
                 $date_1 = Carbon::parse($dd1)->format('Y-m-d H:i');
                 $date_2 = Carbon::parse($dd2)->format('Y-m-d H:i');
-                $data = $data->whereBetween('created_at', [$date_1,$date_2])->orderBy('created_at', 'DESC')->get();
+                $data = $data->whereBetween('created_at', [$date_1, $date_2])->orderBy('created_at', 'DESC')->get();
             } else {
                 $data = $data->whereDate('created_at', Carbon::now())->orderBy('created_at', 'DESC')->get();
             }
-            
+
             $pdf = PDF::loadView('export.cs-detail', compact('data', 'branch', 'date1'));
-            \LogActivity::addToLog(Auth::user()->username.' exporting report (pdf)');
+            \LogActivity::addToLog(Auth::user()->username . ' exporting report (pdf)');
             return $pdf->download('feedback-export-customer-service.pdf');
         } else {
             $this->exportDetail($request->teller_id, $request->input('datefrom'));
@@ -449,22 +449,22 @@ class UserBranchReport extends Controller
 
             if ($request->has('datefrom') && $request->datefrom != null) {
                 $date = explode(' - ', $request->input('datefrom'));
-                $dd1 = $date[0].'00:00';
-                $dd2 = $date[1].'23:59';
+                $dd1 = $date[0] . '00:00';
+                $dd2 = $date[1] . '23:59';
                 $date_1 = Carbon::parse($dd1)->format('Y-m-d H:i');
                 $date_2 = Carbon::parse($dd2)->format('Y-m-d H:i');
-                $data = $data->whereHas('survey_branch', function ($q) use ($date_1,$date_2) {
-                    $q->whereBetween('created_at', [$date_1,$date_2]);
+                $data = $data->whereHas('survey_branch', function ($q) use ($date_1, $date_2) {
+                    $q->whereBetween('created_at', [$date_1, $date_2]);
                 })->orderBy('created_at')->get();
             } else {
                 $data = $data->whereHas('survey_branch', function ($q) {
                     $q->whereDate('created_at', Carbon::now());
                 })->orderBy('created_at')->get();
             }
-             
-            \LogActivity::addToLog(Auth::user()->username.' exporting report (pdf)');
+
+            \LogActivity::addToLog(Auth::user()->username . ' exporting report (pdf)');
             $pdf = App::make('snappy.pdf.wrapper');
-            $pdf->loadView('export.cs-index', compact('data', 'branch', 'date1'));
+            $pdf->loadView('export.cs-index', compact('data', 'date1'));
             // $pdf->setPaper('a4')->setOption('margin-top', 0)->setOption('margin-bottom', 0);
             return $pdf->download('feedback-export.pdf');
         } else {

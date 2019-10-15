@@ -25,7 +25,8 @@ class UserBranchRequest extends FormRequest
     {
         return [
             'username' => 'required|unique:user_branchs,username',
-            'branch_id' => 'required',
+            'branch_id' => 'required|not_in:0',
         ];
     }
+	
 }

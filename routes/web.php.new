@@ -21,17 +21,17 @@ Route::get('logout', 'Auth\LoginController@logout');
 Route::group(['middleware' => 'auth:web'], function () {
     Route::get('/dashboard', 'Dashboard\DashboardController@index')->name('dashboard');
     Route::prefix('master')->group(function () {
-
+        
         /**
          *  User Route
          **/
         Route::get('user/lists', 'User\UserController@data')->name('User::list');
         Route::resource('user', 'User\UserController');
-
+        
         /*
             Branch User
         */
-        Route::post('branch/lists', 'User\UserBranchController@data')->name('UserBranch::list');
+        Route::get('branch/lists', 'User\UserBranchController@data')->name('UserBranch::list');
         Route::get('branch/delete/{id}', 'User\UserBranchController@delete')->name('user_branch.delete');
         Route::resource('user_branch', 'User\UserBranchController');
 
@@ -65,7 +65,7 @@ Route::group(['middleware' => 'auth:web'], function () {
     Route::resource('report', 'Report\ReportController');
 
     /* Report User Branch */
-    Route::post('report_user/data', 'Report\UserBranchReport@data')->name('ReportUser::list');
+    Route::get('report_user/data', 'Report\UserBranchReport@data')->name('ReportUser::list');
     Route::post('report_user/data/detail', 'Report\UserBranchReport@detailList')->name('ReportUser::detailList');
     Route::get('report_user/detail/{id}', 'Report\UserBranchReport@detail')->name('ReportUser::detail');
     Route::get('report_user/data/export/detail', 'Report\UserBranchReport@exportSelect')->name('ReportUser::exportSelect');
@@ -89,4 +89,10 @@ Route::group(['middleware' => 'auth:user_branch'], function () {
         Route::get('/home', 'Front\Home\HomeController@index')->name('home.index')->middleware('survei');
         Route::post('post/survei', 'Front\Home\HomeController@store')->name('home.store');
     });
+});
+
+Route::get('testing', function () {
+    $export = \App\Models\SurveiResult::query()->with('user')->where('teller_id', 1)->get();
+
+    return $export;
 });

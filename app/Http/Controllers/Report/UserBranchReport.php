@@ -97,7 +97,7 @@ class UserBranchReport extends Controller
 
     public function data(Request $request)
     {
-        $data = \App\Models\CustomerService::with('branch');
+        $data = \App\Models\CustomerService::query();
     
         if ($request->has('datefrom') && $request->datefrom != null) {
             $date = explode(' - ', $request->input('datefrom'));
@@ -334,7 +334,7 @@ class UserBranchReport extends Controller
      */
     private function exportDetailIndex($from)
     {
-        $data = \App\Models\CustomerService::with('branch');
+        $data = \App\Models\CustomerService::query();
     
         if ($from) {
             $date = explode(' - ', $from);
@@ -380,7 +380,6 @@ class UserBranchReport extends Controller
                 'NIK' => $s->nik,
                 'Name' => $s->name,
                 'Role' => $s->role,
-                'Branch' => $s->branch->branch_name,
                 'Tidak Puas' => $d->lv1,
                 'Biasa' => $d->lv2,
                 'Puas' => $d->lv3,
@@ -397,7 +396,7 @@ class UserBranchReport extends Controller
                 $sheet->fromArray($data1, null, 'A1', false, true);
                 $sheet->freezeFirstRow();
 
-                $sheet->cells('A1:H1', function ($cells) {
+                $sheet->cells('A1:G1', function ($cells) {
                     $cells->setBackground('#95b3d7');
                     $cells->setFont([
                         'family' => 'Calibri',
@@ -444,7 +443,7 @@ class UserBranchReport extends Controller
     public function exportSelectIndex(Request $request)
     {
         if ($request->has('pdf')) {
-            $data = \App\Models\CustomerService::with('branch');
+            $data = \App\Models\CustomerService::query();
             $date1 = $request->datefrom;
 
             if ($request->has('datefrom') && $request->datefrom != null) {

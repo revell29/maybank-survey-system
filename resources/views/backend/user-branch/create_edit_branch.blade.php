@@ -30,8 +30,8 @@
     <div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
         <div class="d-flex">
             <div class="breadcrumb">
-                <a href="index.html" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
-                <a href="#" class="breadcrumb-item">Master Data</a>
+                <a href="{{route('user_branch.index')}}" class="breadcrumb-item"><i class="icon-home2 mr-2"></i>
+                    Home</a> <a href="#" class="breadcrumb-item">Master Data</a>
                 <span class="breadcrumb-item active">{{isset($data) ? 'Edit User Branch' : 'Add User Branch'}}</span>
             </div>
 
@@ -60,7 +60,7 @@
                             <label>Branch</label>
                             {!! Form::select('branch_id',$options['branches'],isset($data) ? $data->branch_id :
                             null,['class' => 'select form-control','placeholder' => 'Select a branch']) !!}
-                            <label class="validation-invalid-label notif" id="branch"></label>
+                            <label class="validation-invalid-label notif" id="branch-id"></label>
                         </div>
                         <div class="form-group">
                             <label>Username</label>
@@ -127,7 +127,7 @@
             }
             if(response.status == 422){
                 var error = response.responseJSON.errors;
-                if (error.branch_id) $('#branch').html(error.branch_id[0]);
+                if (error.branch_id) $('#branch-id').html(error.branch_id[0]);
                 if (error.role) $('#role').html(error.role[0]);
                 if (error.ip_address) $('#ip_address').html(error.ip_address[0]);
                 if (error.username) $('#username').html(error.username[0]);

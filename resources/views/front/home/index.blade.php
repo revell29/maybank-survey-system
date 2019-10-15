@@ -112,9 +112,10 @@
                     },error: function(response,statu){
                         if(response.status == 422){
                             $('.emoticon').prop('checked',false);
-                            console.log($(this).data('emot'))
+                            
                             $('.img-'+button).css("transform", "scale(1)");
-                            var error = response.responseJSON.errors;
+                            var error = response.responseJSON.message;
+							console.log(error)
                             swal({
                                 text: error.teller_id[0],
                                 type: 'warning',

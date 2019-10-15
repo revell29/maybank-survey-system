@@ -41,8 +41,8 @@ class UserBranchController extends Controller
      */
     public function create()
     {
-        $ID = (new UserBranch)->max('id')+1;
-        $prefix = 'USR'.$ID;
+        $ID = (new UserBranch)->max('id') + 1;
+        $prefix = 'USR' . $ID;
         $options = $this->listing();
         return view('backend.user-branch.create_edit_branch', compact('prefix', 'options'));
     }
@@ -64,7 +64,7 @@ class UserBranchController extends Controller
             'created_by' => Auth::user()->id
         ]);
         if ($data) {
-            \LogActivity::addToLog(Auth::user()->username.' create user branch');
+            \LogActivity::addToLog(Auth::user()->username . ' create user branch');
             return response()->json(['message' => 'User has been added'], 200);
         } else {
             return response()->json(['message' => 'Oops!! something went wrong error'], 500);
@@ -80,13 +80,11 @@ class UserBranchController extends Controller
     public function show($id)
     {
         $data = (new UserBranch)->find($id);
-        if ($data) {
-            $ID = (new UserBranch)->max('id')+1;
-            $prefix = 'USR'.$ID;
-            $options = $this->listing();
-            return view('backend.user-branch.show_only', compact('data', 'prefix', 'options'));
-        }
-        abort(404);
+
+        $ID = (new UserBranch)->max('id') + 1;
+        $prefix = 'USR' . $ID;
+        $options = $this->listing();
+        return view('backend.user-branch.show_only', compact('data', 'prefix', 'options'));
     }
 
     /**
@@ -99,8 +97,8 @@ class UserBranchController extends Controller
     {
         $data = (new UserBranch)->find($id);
         if ($data) {
-            $ID = (new UserBranch)->max('id')+1;
-            $prefix = 'USR'.$ID;
+            $ID = (new UserBranch)->max('id') + 1;
+            $prefix = 'USR' . $ID;
             $options = $this->listing();
             return view('backend.user-branch.create_edit_branch', compact('data', 'prefix', 'options'));
         }
@@ -118,7 +116,7 @@ class UserBranchController extends Controller
     {
         $data = (new UserBranch)->find($id);
         if ($data) {
-            $array = array($request->ip_address,$data->token);
+            $array = array($request->ip_address, $data->token);
             $verify = join($array);
             $data->update([
                 'user_id' => $data->user_id,
@@ -128,7 +126,17 @@ class UserBranchController extends Controller
 
             ]);
 
-            \LogActivity::addToLog(Auth::user()->username.' update user branch');
+            \LogActivity::addToLog(Auth::user()->username . ' update user branch');
+
+            /* if(!empty($request->input('password'))){
+                $data->update([
+                    'password' => bcrypt($request->input('password'))
+                ]);
+            } else {
+                $data->update([
+                    'password' => $data->password
+                ]);
+            } */
 
             if (!empty($request->input('ip_address'))) {
                 $data->update([
@@ -163,31 +171,33 @@ class UserBranchController extends Controller
             UserBranch::where('id', $id)->delete();
         }
 
-        \LogActivity::addToLog(Auth::user()->username.' delete user branch');
+        \LogActivity::addToLog(Auth::user()->username . ' delete user branch');
     }
 
     public function data()
     {
-        $data = UserBranch::with('branch');
+        $data = UserBranch::with('branch')->orderBy('id', 'DESC')->get();
         $permission = Entrust::can('edit_user_branch');
         return DaTatables::of($data)
-                    ->editColumn('user_id', function ($item) use ($permission) {
-                        if ($permission) {
-                            return '<a href="'.route('user_branch.edit', $item->id).'">'.$item->user_id.'</a>';
-                        } else {
-                            return '<a href="'.route('user_branch.show', $item->id).'">'.$item->user_id.'</a>';
-                        }
-                    })
-                    ->addColumn('branch_name', function ($item) {
-                        return $item->branch->branch_name;
-                    })
-                    ->escapeColumns([])
-                    ->make(true);
+            ->editColumn('user_id', function ($item) use ($permission) {
+                if ($permission) {
+                    return '<a href="' . route('user_branch.edit', $item->id) . '">' . $item->user_id . '</a>';
+                } else {
+                    return '<a href="' . route('user_branch.show', $item->id) . '">' . $item->user_id . '</a>';
+                }
+            })
+            ->addColumn('branch_name', function ($item) {
+                if ($item->branch) {
+                    return $item->branch ? $item->branch->branch_name : '';
+                }
+            })
+            ->escapeColumns([])
+            ->make(true);
     }
 
     /**
      *  Listing item wiht pluck
-     *
+     * 
      * @param int @id
      */
 
@@ -196,8 +206,6 @@ class UserBranchController extends Controller
         $branches = (new Branches)->pluck('branch_name', 'id');
         $options['branches'] = $branches;
 
-        $role = ['cs' => 'CS', 'teller' => 'Teller'];
-        $options['role'] = $role;
         return $options;
     }
 }

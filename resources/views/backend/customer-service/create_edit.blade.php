@@ -30,8 +30,8 @@
     <div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
         <div class="d-flex">
             <div class="breadcrumb">
-                <a href="index.html" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
-                <a href="#" class="breadcrumb-item">Master Data</a>
+                <a href="{{route('customer_service.index')}}" class="breadcrumb-item"><i class="icon-home2 mr-2"></i>
+                    Home</a> <a href="#" class="breadcrumb-item">Master Data</a>
                 <span
                     class="breadcrumb-item active">{{isset($data) ? 'Edit Customer Service' : 'Add Customer Service'}}</span>
             </div>
@@ -48,7 +48,7 @@
         <div class="col-md-6 offset-md-3">
             <div class="card">
                 <div class="card-header header-elements-inline">
-                    <h5 class="card-title">{{isset($data) ? 'Edit User Branch' : 'Add Customer Service'}}</h5>
+                    <h5 class="card-title">{{isset($data) ? 'Edit Customer Service' : 'Add Customer Service'}}</h5>
                 </div>
                 <div class="card-body">
                     <form method="" class="" id="form-user">

@@ -16,8 +16,8 @@ use Entrust;
 
 
 class UserController extends Controller
-{   
-     /**
+{
+    /**
      * Create a new controller instance.
      *
      * @return void
@@ -45,10 +45,10 @@ class UserController extends Controller
      */
     public function create()
     {
-        $ID = (new User)->max('id')+1;
-        $prefix = 'USR'.$ID;
-        $role = Role::pluck('display_name','id');
-        return view('backend.user.create_edit_user',compact('prefix','role'));
+        $ID = (new User)->max('id') + 1;
+        $prefix = 'USR' . $ID;
+        $role = Role::pluck('display_name', 'id');
+        return view('backend.user.create_edit_user', compact('prefix', 'role'));
     }
 
     /**
@@ -66,17 +66,17 @@ class UserController extends Controller
             'role_id' => $request->roles_id,
             'created_by' => Auth::user()->id,
         ]);
-        
+
         $roles = (new Role)->where('id', $request->input('role_id'))->get();
 
 
-        if($data){
-            $data1 = (new User)->where('username',$request->username)->first();
+        if ($data) {
+            $data1 = (new User)->where('username', $request->username)->first();
             $data1->roles()->attach($request->role_id);
-            \LogActivity::addToLog(Auth::user()->username.' add user');
-            return response()->json(['message' => 'User has been added'],200);
+            \LogActivity::addToLog(Auth::user()->username . ' add user');
+            return response()->json(['message' => 'User has been added'], 200);
         } else {
-            return response()->json(['message' => 'Oops!! something went wrong error'],500);
+            return response()->json(['message' => 'Oops!! something went wrong error'], 500);
         }
     }
 
@@ -89,11 +89,11 @@ class UserController extends Controller
     public function show($id)
     {
         $data = (new User)->find($id);
-        if($data){
-            $ID = (new User)->max('id')+1;
-            $prefix = 'USR'.$ID;
-            $role = Role::pluck('display_name','id');
-            return view('backend.user.show_only',compact('data','prefix','role'));
+        if ($data) {
+            $ID = (new User)->max('id') + 1;
+            $prefix = 'USR' . $ID;
+            $role = Role::pluck('display_name', 'id');
+            return view('backend.user.show_only', compact('data', 'prefix', 'role'));
         }
         abort(404);
     }
@@ -107,11 +107,11 @@ class UserController extends Controller
     public function edit($id)
     {
         $data = (new User)->find($id);
-        if($data){
-            $ID = (new User)->max('id')+1;
-            $prefix = 'USR'.$ID;
-            $role = Role::pluck('display_name','id');
-            return view('backend.user.create_edit_user',compact('data','prefix','role'));
+        if ($data) {
+            $ID = (new User)->max('id') + 1;
+            $prefix = 'USR' . $ID;
+            $role = Role::pluck('display_name', 'id');
+            return view('backend.user.create_edit_user', compact('data', 'prefix', 'role'));
         }
         abort(404);
     }
@@ -126,7 +126,7 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $data = (new User)->find($id);
-        if($data){
+        if ($data) {
             $data->update([
                 'user_id' => $request->user_id,
                 'role_id' => $request->role_id,
@@ -136,16 +136,16 @@ class UserController extends Controller
 
             $roles = (new Role)->where('id', $request->input('role_id'))->pluck('id', 'id');
             $data->roles()->sync($roles);
-            \LogActivity::addToLog(Auth::user()->username.' update user');
+            \LogActivity::addToLog(Auth::user()->username . ' update user');
 
-            if($request->has('password')){
+            if ($request->has('password')) {
                 $data->update([
                     'password' => bcrypt($request->input('password'))
                 ]);
             }
-            return response()->json(['message' => 'User has been added'],200);
+            return response()->json(['message' => 'User has been added'], 200);
         } else {
-            return response()->json(['message' => 'Oops!! something went wrong error'],500);
+            return response()->json(['message' => 'Oops!! something went wrong error'], 500);
         }
     }
 
@@ -160,33 +160,33 @@ class UserController extends Controller
         if (is_array(explode(',', $id))) {
             User::destroy(explode(',', $id));
         } else {
-            User::where('id',$id)->delete();
+            User::where('id', $id)->delete();
         }
-        \LogActivity::addToLog(Auth::user()->username.' delete user');
+        \LogActivity::addToLog(Auth::user()->username . ' delete user');
     }
 
     public function data()
     {
-        $data = user::with('roles');
+        $data = user::with('roles')->select('*');
         $permission = Entrust::can('edit_user');
         return DaTatables::of($data)
-                ->addIndexColumn()
-                ->setRowId('id')
-                ->editColumn('user_id',function($item) use ($permission){
-                    if($permission){
-                        return '<a href="'.route('user.edit',$item->id).'">'.$item->user_id.'</a>';
-                    } else {
-                        return '<a href="'.route('user.show',$item->id).'">'.$item->user_id.'</a>';
-                    }
-                })
-                ->addColumn('roles_name',function($item){
-                    if($item->roles()->latest()->first()){
-                        return $item->roles()->latest()->first()->display_name;
-                    } else {
-                        return 'No role';
-                    }
-                })
-                ->escapeColumns([])
-                ->make(true);
+            ->addIndexColumn()
+            ->setRowId('id')
+            ->editColumn('user_id', function ($item) use ($permission) {
+                if ($permission) {
+                    return '<a href="' . route('user.edit', $item->id) . '">' . $item->user_id . '</a>';
+                } else {
+                    return '<a href="' . route('user.show', $item->id) . '">' . $item->user_id . '</a>';
+                }
+            })
+            ->addColumn('roles_name', function ($item) {
+                if ($item->roles()->latest()->first()) {
+                    return $item->roles()->latest()->first()->display_name;
+                } else {
+                    return 'No role';
+                }
+            })
+            ->escapeColumns([])
+            ->make(true);
     }
 }

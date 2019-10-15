@@ -93,14 +93,14 @@
             data: function (d) {
                 d.datefrom = $('input[name=datefrom]').val();
             },
-            method: 'GET'
+            method: 'POST'
         },
         columns: [
             { data: 'id', name: 'id',searchable:true},
             { data: 'nik', name: 'nik',searchable:true },
             { data: 'name', name: 'name',searchable:true },
             { data: 'role', name: 'role',searchable:true },
-            { data: 'branch.branch_name', name: 'branch_name',searchable:true },
+            { data: 'branch.branch_name', name: 'branch_name',searchable:true,defaultContent: '' },
             { data: 'tidak_puas', name: 'tidak_puas',searchable:false},
             { data: 'biasa', name: 'biasa',searchable:false },
             { data: 'puas', name: 'puas',searchable:false },

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CustomerServiceRequest;
+use App\Http\Requests\CustomerServiceUpdate;
 use DataTables;
 use Auth;
 use App\Models\UserBranch;
@@ -44,7 +45,7 @@ class CustomerService extends Controller
     public function store(CustomerServiceRequest $request)
     {
         if ($data = MsCustomerService::create($request->all())) {
-            \LogActivity::addToLog(Auth::user()->username.' create user branch');
+            \LogActivity::addToLog(Auth::user()->username . ' create user branch');
             return response()->json(['message' => 'Customer service has been added'], 200);
         } else {
             return response()->json(['message' => 'Oops!! something went wrong error'], 500);
@@ -87,12 +88,12 @@ class CustomerService extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(CustomerServiceRequest $request, $id)
+    public function update(CustomerServiceUpdate $request, $id)
     {
         $data = MsCustomerService::find($id);
         if ($data) {
             $data->update($request->all());
-            \LogActivity::addToLog(Auth::user()->username.' edit customer service');
+            \LogActivity::addToLog(Auth::user()->username . ' edit customer service');
             return response()->json(['message' => 'Customer service has been updated'], 200);
         }
     }
@@ -111,7 +112,7 @@ class CustomerService extends Controller
             MsCustomerService::where('id', $id)->delete();
         }
 
-        \LogActivity::addToLog(Auth::user()->username.' delete Customer service');
+        \LogActivity::addToLog(Auth::user()->username . ' delete Customer service');
     }
 
     /**
@@ -136,17 +137,17 @@ class CustomerService extends Controller
         $data = MsCustomerService::with('branch');
         $permission = Entrust::can('edit_user_branch');
         return DaTatables::of($data)
-                    ->editColumn('nik', function ($item) use ($permission) {
-                        if ($permission) {
-                            return '<a href="'.route('customer_service.edit', $item->id).'">'.$item->nik.'</a>';
-                        } else {
-                            return '<a href="'.route('customer_service.show', $item->id).'">'.$item->nik.'</a>';
-                        }
-                    })
-                    ->addColumn('branch_name', function ($item) {
-                        return $item->branch->branch_name;
-                    })
-                    ->escapeColumns([])
-                    ->make(true);
+            ->editColumn('nik', function ($item) use ($permission) {
+                if ($permission) {
+                    return '<a href="' . route('customer_service.edit', $item->id) . '">' . $item->nik . '</a>';
+                } else {
+                    return '<a href="' . route('customer_service.show', $item->id) . '">' . $item->nik . '</a>';
+                }
+            })
+            ->addColumn('branch_name', function ($item) {
+                return $item->branch ? $item->branch->branch_name : '';
+            })
+            ->escapeColumns([])
+            ->make(true);
     }
 }

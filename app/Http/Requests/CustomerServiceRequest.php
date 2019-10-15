@@ -24,10 +24,17 @@ class CustomerServiceRequest extends FormRequest
     public function rules()
     {
         return [
-            'nik' => 'required',
+            'nik' => 'required|unique:customer_services,nik',
             'name' => 'required',
             'branch_id' => 'required',
             'role' => 'required'
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'nik.unique' => 'The NIK has already been taken.'
         ];
     }
 }

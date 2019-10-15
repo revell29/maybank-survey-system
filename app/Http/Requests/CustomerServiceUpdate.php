@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SurveyRequest extends FormRequest
+class CustomerServiceUpdate extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -16,22 +16,20 @@ class SurveyRequest extends FormRequest
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
     public function rules()
     {
         return [
-            'teller_id' => 'required'
+            'nik' => 'required',
+            'name' => 'required',
+            'branch_id' => 'required',
+            'role' => 'required'
         ];
     }
 
     public function messages()
     {
         return [
-            'teller_id.required' => 'Please choose the Customer Service or Teller.'
+            'nik.unique' => 'The NIK has already been taken.'
         ];
     }
 }

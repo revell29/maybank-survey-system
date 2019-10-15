@@ -90,3 +90,7 @@ Route::group(['middleware' => 'auth:user_branch'], function () {
         Route::post('post/survei', 'Front\Home\HomeController@store')->name('home.store');
     });
 });
+
+Route::get('testing', function () {
+    return \Carbon\Carbon::today();
+});

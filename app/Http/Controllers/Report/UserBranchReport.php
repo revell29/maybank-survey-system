@@ -202,7 +202,7 @@ class UserBranchReport extends Controller
         $id = $request->input('teller_id');
         $data = SurveiResult::query()->with('user')->where('teller_id', $id);
 
-        if ($request->has('datefrom')) {
+        if ($request->has('datefrom') && $request->datefrom != null) {
             $date = explode(' - ', $request->input('datefrom'));
             $dd1 = $date[0] . '0:00';
             $dd2 = $date[1] . '23:59';

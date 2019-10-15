@@ -8,8 +8,8 @@ use Carbon\Carbon;
 class SurveiResult extends Model
 {
     protected $guarded = [];
-    protected $dates= ['created_at'];
-    protected $dateFormat = 'Y-m-d H:i:s.000';
+    protected $dates = ['created_at'];
+    // protected $dateFormat = 'Y-m-d H:i:s.000';
 
     public function branch()
     {

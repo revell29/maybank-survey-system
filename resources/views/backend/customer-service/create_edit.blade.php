@@ -108,7 +108,7 @@
           type: '{{ isset($data) ? 'PATCH' : 'POST'}}',
           beforeSend: function (xhr, $form) {
             $('.form-group').removeClass('has-danger');
-            $('#save').prop('disabled',true).html('please wait.');
+            $('#save').prop('disabled',true).html('Please wait');
           },
           success: function (response, xhr, status, $form) {
            swal({
@@ -125,7 +125,7 @@
           error: function (response,status) {
             if(response.status == 500){
                 swal("Error",response.message,'error');
-                $('#save').prop('disabled',false).html('submit');
+                $('#save').prop('disabled',false).html('Submit');
             }
             if(response.status == 422){
                 var error = response.responseJSON.errors;
@@ -133,7 +133,7 @@
                 if (error.role) $('#role').html(error.role[0]);
                 if (error.name) $('#name').html(error.name[0]);
                 if (error.nik) $('#nik').html(error.nik[0]);
-                $('#save').prop('disabled',false).html('submit');
+                $('#save').prop('disabled',false).html('Submit');
             }
           }
         });

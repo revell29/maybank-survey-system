@@ -91,13 +91,14 @@
 <script type="text/javascript">
     $(document).ready(function () {
       $('#save').on('click', function () {
-
+        var btn = $(this);
         $.ajax({
           url: '{{isset($data) ? route('user.update',$data->id) : route('user.store')}}',
           data: $('#form-user').serialize(),
           dataType: 'json',
           type: '{{ isset($data) ? 'PATCH' : 'POST'}}',
           beforeSend: function (xhr, $form) {
+            btn.html('Please wait').prop('disabled',true);
             $('.form-group').removeClass('has-danger');
           },
           success: function (response, xhr, status, $form) {
@@ -114,9 +115,11 @@
           },
           error: function (response,status) {
             if(response.status == 500){
+                btn.html('Submit').prop('disabled',false)
                 swal("Error",response.message,'error');
             }
             if(response.status == 422){
+                btn.html('Submit').prop('disabled',false)
                 var error = response.responseJSON.errors;
                 if (error.first_name) $('#first_name').html(error.first_name[0]);
                 if (error.last_name) $('#last_name').html(error.last_name[0]);

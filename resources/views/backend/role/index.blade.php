@@ -61,11 +61,12 @@
 <!-- /main content -->
 
 @endsection
-
 @push('scriptcode')
 <script type="text/javascript">
     var table = $('#data-table').DataTable({
         order: [1, 'desc'],
+        processing: true,
+        serverSide: true,
         ajax: '{{route("Role::data")}}',
         columnDefs: [{
             targets: 0,
@@ -81,11 +82,11 @@
             { data: 'name', name: 'name' },
             { data: 'description', name: 'description' },
         ]
-    })
+    });
 
     table.on('select',function(){
         table.rows('#1').deselect();
-    })
+    });
 </script>
 @endpush
 @section('globaldatatables')

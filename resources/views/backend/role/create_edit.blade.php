@@ -54,43 +54,74 @@
                             <label>Role Name</label>
                             <input type="text" class="form-control notif" name="name"
                                 value="{{isset($data) ? $data->name : null}}">
-                            <label class="validation-invalid-label notif" id="display_name"></label>
+                            <label class="validation-invalid-label notif" id="name"></label>
                         </div>
-                        {{-- <div class="form-group">
-                                <label>Display Name</label>
-                                <input type="text" class="form-control" name="display_name" value="{{isset($data) ? $data->display_name : null}}">
-                        <label class="validation-invalid-label notif" id="display_name"></label>
-                </div> --}}
-                <div class="form-group">
-                    <label>Role Description</label>
-                    {!! Form::textarea('description', isset($data) ? $data->description : null, ['class' =>
-                    'form-control m-input', 'placeholder' => 'Enter Description']) !!}
-                    <label class="validation-invalid-label notif" id="description"></label>
-                </div>
-                <div class="form-group">
-                    <label>Privileges</label>
-                    <label class="validation-invalid-label notif" id="permission-notif"></label>
-                    <div class="row">
-                        <div class="col-md-3">
-                            @foreach($permission as $p)
-                            <div class="form-check">
-                                <label class="form-check-label">
-                                    <div class="">
-                                        <span class="">
-                                            {!! Form::checkbox('permissions[]', $p->id, isset($data) ?
-                                            $data->hasPermission($p->name) : '',['class' => 'form-check-input-styled'])
-                                            !!}
-                                        </span>
+                        <div class="form-group">
+                            <label>Role Description</label>
+                            {!! Form::textarea('description', isset($data) ? $data->description : null, ['class' =>
+                            'form-control m-input', 'placeholder' => 'Enter Description']) !!}
+                            <label class="validation-invalid-label notif" id="description"></label>
+                        </div>
+                        <div class="form-group">
+                            <label>Privileges</label>
+                            <label class="validation-invalid-label notif" id="permission-notif"></label>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    @foreach($permission as $p)
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <div class="">
+                                                <span class="">
+                                                    {!! Form::checkbox('permissions[]', $p->id, isset($data) ?
+                                                    $data->hasPermission($p->name) : '',['class' =>
+                                                    'form-check-input-styled'])
+                                                    !!}
+                                                </span>
+                                            </div>
+                                            {{$p->display_name}}
+                                        </label>
                                     </div>
-                                    {{$p->display_name}}
-                                </label>
+                                    @break($loop->iteration == 4)
+                                    @endforeach
+                                </div>
+                                <div class="col-md-3">
+                                    @foreach($permission as $p)
+                                    @continue($p->id < 5) <div class="form-check">
+                                        <label class="form-check-label">
+                                            <div class="">
+                                                <span class="">
+                                                    {!! Form::checkbox('permissions[]', $p->id, isset($data) ?
+                                                    $data->hasPermission($p->name) : '',['class' =>
+                                                    'form-check-input-styled'])
+                                                    !!}
+                                                </span>
+                                            </div>
+                                            {{$p->display_name}}
+                                        </label>
+                                </div>
+                                @break($loop->iteration == 8)
+                                @endforeach
                             </div>
-                            @break($loop->iteration == 4)
+                            <div class="col-md-3">
+                                @foreach($permission as $p)
+                                @continue($p->id < 9) <div class="form-check">
+                                    <label class="form-check-label">
+                                        <div class="">
+                                            <span class="">
+                                                {!! Form::checkbox('permissions[]', $p->id, isset($data) ?
+                                                $data->hasPermission($p->name) : '',['class' =>
+                                                'form-check-input-styled']) !!}
+                                            </span>
+                                        </div>
+                                        {{$p->display_name}}
+                                    </label>
+                            </div>
+                            @break($loop->iteration == 12)
                             @endforeach
                         </div>
                         <div class="col-md-3">
                             @foreach($permission as $p)
-                            @continue($p->id < 5) <div class="form-check">
+                            @continue($p->id < 13) <div class="form-check">
                                 <label class="form-check-label">
                                     <div class="">
                                         <span class="">
@@ -102,28 +133,16 @@
                                     {{$p->display_name}}
                                 </label>
                         </div>
-                        @break($loop->iteration == 8)
+                        @break($loop->iteration == 16)
                         @endforeach
-                    </div>
-                    <div class="col-md-3">
-                        @foreach($permission as $p)
-                        @continue($p->id < 9) <div class="form-check">
-                            <label class="form-check-label">
-                                <div class="">
-                                    <span class="">
-                                        {!! Form::checkbox('permissions[]', $p->id, isset($data) ?
-                                        $data->hasPermission($p->name) : '',['class' => 'form-check-input-styled']) !!}
-                                    </span>
-                                </div>
-                                {{$p->display_name}}
-                            </label>
-                    </div>
-                    @break($loop->iteration == 12)
-                    @endforeach
                 </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
                 <div class="col-md-3">
                     @foreach($permission as $p)
-                    @continue($p->id < 13) <div class="form-check">
+                    @continue($p->id < 17) <div class="form-check">
                         <label class="form-check-label">
                             <div class="">
                                 <span class="">
@@ -134,32 +153,12 @@
                             {{$p->display_name}}
                         </label>
                 </div>
-                @break($loop->iteration == 16)
+                @break($loop->iteration == 22)
                 @endforeach
             </div>
         </div>
     </div>
-    <div class="form-group">
-        <div class="row">
-            <div class="col-md-3">
-                @foreach($permission as $p)
-                @continue($p->id < 17) <div class="form-check">
-                    <label class="form-check-label">
-                        <div class="">
-                            <span class="">
-                                {!! Form::checkbox('permissions[]', $p->id, isset($data) ?
-                                $data->hasPermission($p->name) : '',['class' => 'form-check-input-styled']) !!}
-                            </span>
-                        </div>
-                        {{$p->display_name}}
-                    </label>
-            </div>
-            @break($loop->iteration == 22)
-            @endforeach
-        </div>
-    </div>
-</div>
-</form>
+    </form>
 </div>
 <div class="card-footer">
     <div class="text-right">
@@ -180,13 +179,14 @@
 @push('scriptcode')
 <script type="text/javascript">
     $('#save').on('click', function () {
-
+        var btn = $(this);
         $.ajax({
           url: '{{ isset($data) ? route('role.update',$data->id) : route('role.store')}}',
           data: $('#form-role').serialize(),
           dataType: 'json',
           type: '{{ isset($data) ? 'PATCH' : 'POST'}}',
           beforeSend: function (xhr, $form) {
+              btn.html('Please wait').prop('disabled',true);
             $('.form-group').removeClass('has-danger');
           },
           success: function (response, xhr, status, $form) {
@@ -203,9 +203,11 @@
           },
           error: function (response,status) {
             if(response.status == 500){
+                btn.html('Submit').prop('disabled',false);
                 swal("Error",response.message,'error');
             }
             if(response.status == 422){
+                btn.html('Submit').prop('disabled',false);
                 var error = response.responseJSON.errors;
                 if (error.name) $('#name').html(error.name[0]);
                 if (error.display_name) $('#display_name').html(error.display_name[0]);

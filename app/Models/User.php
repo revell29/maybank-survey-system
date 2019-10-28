@@ -15,7 +15,6 @@ class User extends Authenticatable
 
     protected $guarded = [];
     protected $appends = ['full_name'];
-    protected $with = 'roles';
 
     public function getFullNameAttribute()
     {

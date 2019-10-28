@@ -168,9 +168,10 @@ class UserController extends Controller
 
     public function data()
     {
-        $data = user::with('role')->select('users.*');
+        $data = user::with('role')->get();
         $permission = Entrust::can('edit_user');
         return DaTatables::of($data)
+            ->addIndexColumn('id')
             ->setRowId('id')
             ->editColumn('user_id', function ($item) use ($permission) {
                 if ($permission) {
@@ -178,6 +179,9 @@ class UserController extends Controller
                 } else {
                     return '<a href="' . route('user.show', $item->id) . '">' . $item->user_id . '</a>';
                 }
+            })
+            ->addColumn('role_name', function ($item) {
+                return $item->role ? $item->role->name : '';
             })
             ->escapeColumns([])
             ->make(true);

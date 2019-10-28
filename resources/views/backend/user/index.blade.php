@@ -82,7 +82,7 @@
             { data: 'id', name: 'id', width: '30px', class: "text-center" },
             { data: 'user_id', name: 'user_id' },
             { data: 'username', name: 'username', searchable: true},
-            { data: 'role.name', name: 'name', defaultContent: ''},
+            { data: 'role_name', name: 'role_name', defaultContent: ''},
         ]
     })
 

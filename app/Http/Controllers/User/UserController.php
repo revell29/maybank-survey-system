@@ -168,7 +168,7 @@ class UserController extends Controller
 
     public function data()
     {
-        $data = user::with('role')->select('*');
+        $data = user::with('role')->select('users.*');
         $permission = Entrust::can('edit_user');
         return DaTatables::of($data)
             ->setRowId('id')

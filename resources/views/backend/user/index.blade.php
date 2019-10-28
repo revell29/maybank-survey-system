@@ -9,7 +9,6 @@
 <script type="text/javascript" src="/global_assets/js/plugins/notifications/sweet_alert.min.js"></script>
 <script type="text/javascript" src="/global_assets/js/plugins/forms/styling/uniform.min.js"></script>
 <script type="text/javascript" src="/custom/datatables.js"></script>
-{{-- <script type="text/javascript" src="/js/global/datatables.js"></script> --}}
 @endsection
 
 @section('content')
@@ -83,7 +82,7 @@
             { data: 'id', name: 'id', width: '30px', class: "text-center" },
             { data: 'user_id', name: 'user_id' },
             { data: 'username', name: 'username', searchable: true},
-            { data: 'role.name', name: 'role.name', defaultContent: ''},
+            { data: 'role.name', name: 'name', defaultContent: ''},
         ]
     })
 

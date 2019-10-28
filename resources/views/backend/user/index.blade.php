@@ -9,7 +9,7 @@
 <script type="text/javascript" src="/global_assets/js/plugins/notifications/sweet_alert.min.js"></script>
 <script type="text/javascript" src="/global_assets/js/plugins/forms/styling/uniform.min.js"></script>
 <script type="text/javascript" src="/custom/datatables.js"></script>
-<script type="text/javascript" src="/js/global/datatables.js"></script>
+{{-- <script type="text/javascript" src="/js/global/datatables.js"></script> --}}
 @endsection
 
 @section('content')
@@ -69,10 +69,6 @@
 <script type="text/javascript">
     var table = $('#data-table').DataTable({
         order: [1, 'desc'],
-        searching: true,
-        processing: true,
-        serverSide: true,
-        stateSave: true,
         ajax: '{{route('User::list')}}',
         columnDefs: [{
             targets: 0,
@@ -87,13 +83,13 @@
             { data: 'id', name: 'id', width: '30px', class: "text-center" },
             { data: 'user_id', name: 'user_id' },
             { data: 'username', name: 'username', searchable: true},
-            { data: 'roles_name', name: 'roles_name' },
+            { data: 'role.name', name: 'role.name' },
         ]
     })
 
     table.on('select',function(){
         table.rows('#1').deselect();
-    })
+    });
 
 </script>
 @endpush

@@ -87,9 +87,9 @@
             { data: 'nik', name: 'nik' },
             { data: 'name', name: 'name' },
             { data: 'role', name: 'role' },
-            { data: 'branch_name', name: 'branch_name' },
+            { data: 'branch.branch_name', name: 'branch.branch_name',defaultContent: '', sortable: false },
         ]
-    })
+    });
 </script>
 @endpush
 @section('globaldatatables')

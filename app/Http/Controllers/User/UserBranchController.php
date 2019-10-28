@@ -41,9 +41,10 @@ class UserBranchController extends Controller
      */
     public function create()
     {
-        $ID = (new UserBranch)->max('id') + 1;
-        $prefix = 'USR' . $ID;
-        $options = $this->listing();
+        $code     = 'USR';
+        $lastCode = collect(UserBranch::all())->last();
+        $prefix   = $code . (substr($lastCode['user_id'], strlen($code)) + 1);
+        $options  = $this->listing();
         return view('backend.user-branch.create_edit_branch', compact('prefix', 'options'));
     }
 

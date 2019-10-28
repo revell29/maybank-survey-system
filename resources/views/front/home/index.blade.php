@@ -21,8 +21,9 @@
     <form id="form-survei" class="form-horizotal">
         <div class="row">
             <div class="col-md-12 text-center" style="margin-left:0px;">
-                <button type="button" class="btn btn-lg rounded-round btn-warning btn-home" style="background-color: #263238; height: 60px; margin-top:15px; margin-bottom: 15px;" data-toggle="modal"
-                    data-target="#exampleModal" id="btn-cus">Choose
+                <button type="button" class="btn btn-lg rounded-round btn-warning btn-home"
+                    style="background-color: #263238; height: 60px; margin-top:15px; margin-bottom: 15px;"
+                    data-toggle="modal" data-target="#exampleModal" id="btn-cus">Choose
                     the
                     Customer Service /
                     Teller</button>
@@ -62,10 +63,11 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Choose
-                        the
-                        Customer Service /
-                        Teller</h5>
-                <button type="button" class="btn" style="background-color:#FFC400;" data-dismiss="modal" aria-label="Close">
+                    the
+                    Customer Service /
+                    Teller</h5>
+                <button type="button" class="btn" style="background-color:#FFC400;" data-dismiss="modal"
+                    aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -85,6 +87,7 @@
 @push('scriptcode')
 <script type="text/javascript">
     $(function(){
+            var doubleClick = false;
             $('#cs-teller').on('click','tr',function(){
                 console.log($(this).attr('id'))
                 $('#teller-id').val($(this).attr('id'));
@@ -93,39 +96,44 @@
             })
             $('.emoticon').on('click',function(e){
                 var button = $(this).data('emot');
+                doubleClick = true;
                 e.preventDefault();
-                $.ajax({
-                    url: '{{route('home.store')}}',
-                    data: $('#form-survei').serialize(),
-                    dataType: 'JSON',
-                    method: 'POST',
-                    timer: 3000,
-                    beforeSend: function() {
-                        $('.img-'+button).css("transform", "scale(1.3)");
-                    },
-                    success: function(response){
-                        $('.emoticon').prop('checked',false);
-                        $('.main').hide();
-                        $('#thanks').fadeIn(2000).show().delay(5000).queue(function(){
-                            window.location.reload();
-                        });
-                    },error: function(response,statu){
-                        if(response.status == 422){
+                if(doubleClick) {
+                    $.ajax({
+                        url: '{{route('home.store')}}',
+                        data: $('#form-survei').serialize(),
+                        dataType: 'JSON',
+                        method: 'POST',
+                        timer: 3000,
+                        beforeSend: function() {
+                            $('.img-'+button).css("transform", "scale(1.3)");
+                        },
+                        success: function(response){
                             $('.emoticon').prop('checked',false);
-                            
-                            $('.img-'+button).css("transform", "scale(1)");
-                            var error = response.responseJSON.message;
-							console.log(error)
-                            swal({
-                                text: error.teller_id[0],
-                                type: 'warning',
-                                showCancelButton: false,
-                                showConfirmButton: false,
-                                timer: 3000
+                            $('.main').hide();
+                            $('#thanks').fadeIn(2000).show().delay(5000).queue(function(){
+                                window.location.reload();
                             });
+                        },error: function(response,statu){
+                            if(response.status == 422){
+                                $('.emoticon').prop('checked',false);
+                                
+                                $('.img-'+button).css("transform", "scale(1)");
+                                var error = response.responseJSON.message;
+                                console.log(error)
+                                swal({
+                                    text: error.teller_id[0],
+                                    type: 'warning',
+                                    showCancelButton: false,
+                                    showConfirmButton: false,
+                                    timer: 3000
+                                });
+                            }
                         }
-                    }
-                })
+                    })
+
+                    doubleClick = false;
+                }
             })
             $('#logout').click(function(){
                 swal({
@@ -152,6 +160,6 @@
                     }
                 })        
             })
-        })
+        });
 </script>
 @endpush

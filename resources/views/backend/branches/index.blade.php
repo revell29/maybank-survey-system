@@ -66,7 +66,7 @@
 @push('scriptcode')
 <script type="text/javascript">
     var table = $('#data-table').DataTable({
-        order: [0, 'desc'],
+        order: [1, 'desc'],
         ajax: '{{route("Branch::list")}}',
         columnDefs: [{
             targets: 0,

@@ -69,7 +69,7 @@
 @push('scriptcode')
 <script type="text/javascript">
     var table = $('#data-table').DataTable({
-        order: [0, 'desc'],
+        order: [1, 'desc'],
         ajax: {
 			url :'{{route("UserBranch::list")}}',
 			method: 'POST'
@@ -89,7 +89,7 @@
             { data: 'branch_name', name: 'branch_name' },
             { data: 'ip_address2', name: 'ip_address2', render: function() { return ''} },
         ]
-    })
+    });
 </script>
 @endpush
 @section('globaldatatables')

@@ -9,9 +9,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
 
 class User extends Authenticatable
-{   
+{
 
-    use Notifiable,HasLdapUser,EntrustUserTrait ;
+    use Notifiable, HasLdapUser, EntrustUserTrait;
 
     protected $guarded = [];
     protected $appends = ['full_name'];
@@ -19,6 +19,11 @@ class User extends Authenticatable
 
     public function getFullNameAttribute()
     {
-        return $this->first_name.' '.$this->last_name;
+        return $this->first_name . ' ' . $this->last_name;
+    }
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class, 'role_id', 'id');
     }
 }

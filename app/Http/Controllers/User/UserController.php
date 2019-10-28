@@ -45,8 +45,9 @@ class UserController extends Controller
      */
     public function create()
     {
-        $ID = (new User)->max('id') + 1;
-        $prefix = 'USR' . $ID;
+        $code     = 'USR';
+        $lastCode   = collect(User::all())->last();
+        $prefix       = $code . (substr($lastCode['user_id'], strlen($code)) + 1);
         $role = Role::pluck('display_name', 'id');
         return view('backend.user.create_edit_user', compact('prefix', 'role'));
     }
@@ -63,7 +64,7 @@ class UserController extends Controller
         $data->create([
             'user_id' => $request->user_id,
             'username' => $request->username,
-            'role_id' => $request->roles_id,
+            'role_id' => $request->role_id,
             'created_by' => Auth::user()->id,
         ]);
 
@@ -167,23 +168,15 @@ class UserController extends Controller
 
     public function data()
     {
-        $data = user::with('roles')->select('*');
+        $data = user::with('role')->select('*');
         $permission = Entrust::can('edit_user');
         return DaTatables::of($data)
-            ->addIndexColumn()
             ->setRowId('id')
             ->editColumn('user_id', function ($item) use ($permission) {
                 if ($permission) {
                     return '<a href="' . route('user.edit', $item->id) . '">' . $item->user_id . '</a>';
                 } else {
                     return '<a href="' . route('user.show', $item->id) . '">' . $item->user_id . '</a>';
-                }
-            })
-            ->addColumn('roles_name', function ($item) {
-                if ($item->roles()->latest()->first()) {
-                    return $item->roles()->latest()->first()->display_name;
-                } else {
-                    return 'No role';
                 }
             })
             ->escapeColumns([])

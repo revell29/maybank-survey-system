@@ -11,7 +11,7 @@ class CustomerService extends Model
 
     public function branch()
     {
-        return $this->belongsTo(Branches::class, 'branch_id');
+        return $this->belongsTo(Branches::class, 'branch_id', 'id');
     }
 
     public function survey_branch()

@@ -132,9 +132,9 @@ class CustomerService extends Controller
      *  Listing data from storage into datatables
      *  @return \Iluminate\Http\Request
      */
-    public function data()
+    public function data(Request  $request)
     {
-        $data = MsCustomerService::with('branch');
+        $data = MsCustomerService::query()->with('branch');
         $permission = Entrust::can('edit_user_branch');
         return DaTatables::of($data)
             ->editColumn('nik', function ($item) use ($permission) {

@@ -65,7 +65,7 @@
                         <div class="form-group">
                             <label>Role</label>
                             {!! Form::select('role_id',$role,isset($data) ? $data->roles : null,['class' =>
-                            'form-control select-nosearch'])!!}
+                            'form-control select-nosearch','placeholder' => 'Select an Role'])!!}
                             <label class="validation-invalid-label notif" id="role"></label>
                         </div>
 

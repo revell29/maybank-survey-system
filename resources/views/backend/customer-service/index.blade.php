@@ -72,7 +72,11 @@
 <script type="text/javascript">
     var table = $('#data-table').DataTable({
         order: [1, 'desc'],
-        ajax: '{{route("CustomerService::list")}}',
+        ajax: 
+        {
+            url: '{{route("CustomerService::list")}}',
+            method: 'POST'
+        },
         columnDefs: [{
             targets: 0,
             createdCell: function(td, cellData) {
@@ -87,7 +91,7 @@
             { data: 'nik', name: 'nik' },
             { data: 'name', name: 'name' },
             { data: 'role', name: 'role' },
-            { data: 'branch.branch_name', name: 'branch.branch_name',defaultContent: '', sortable: false },
+            { data: 'branch_name', name: 'branch_name',defaultContent: '', sortable: true },
         ]
     });
 </script>

@@ -86,7 +86,7 @@
             { data: 'id', name: 'id', width: '50px', orderable: false, render: function() { return ''} },
             { data: 'user_id', name: 'user_id' },
             { data: 'username', name: 'username' },
-            { data: 'branch_name', name: 'branch_name' },
+            { data: 'branch_name', name: 'branch_name', defaultContent: '' },
             { data: 'ip_address2', name: 'ip_address2', render: function() { return ''} },
         ]
     });

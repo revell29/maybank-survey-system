@@ -134,7 +134,7 @@ class CustomerService extends Controller
      */
     public function data(Request  $request)
     {
-        $data = MsCustomerService::query()->with('branch');
+        $data = MsCustomerService::with('branch')->orderBy('id', 'DESC')->get();
         $permission = Entrust::can('edit_user_branch');
         return DaTatables::of($data)
             ->editColumn('nik', function ($item) use ($permission) {

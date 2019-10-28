@@ -50,7 +50,7 @@ Route::group(['middleware' => 'auth:web'], function () {
         /*
             Branch User
         */
-        Route::get('customer_service/lists', 'User\CustomerService@data')->name('CustomerService::list');
+        Route::post('customer_service/lists', 'User\CustomerService@data')->name('CustomerService::list');
         Route::get('customer_service/delete/{id}', 'User\CustomerService@delete')->name('CustomerService.delete');
         Route::resource('customer_service', 'User\CustomerService');
     });

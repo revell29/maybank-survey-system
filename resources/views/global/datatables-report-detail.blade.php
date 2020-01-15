@@ -1,6 +1,5 @@
 <script>
-
-        $(function() {
+    $(function() {
     
             // Select all checkbox
             $('#select-all').on('click', function(){
@@ -81,7 +80,7 @@
                 url = $('#data-table').data('url') + '/restore/' + ids;
                 confirm(table, 1, url, 'POST')
             } else if (option == 2) {
-                url = $('#data-table').data('url') + '/' + ids;
+                url = $('#data-table').data('url') + '/delete/' + ids;
                 confirm(table, 2, url, 'DELETE')
             } else if (option == 3) {
                 url = $('#data-table').data('url') + '/remove/' + ids;
@@ -144,4 +143,4 @@
             })        
         }
     
-    </script>
+</script>

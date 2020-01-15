@@ -26,32 +26,35 @@ Route::group(['middleware' => 'auth:web'], function () {
          *  User Route
          **/
         Route::get('user/lists', 'User\UserController@data')->name('User::list');
+        Route::get('user/delete/{id}', 'User\UserController@destroy')->name('user.delete');
         Route::resource('user', 'User\UserController');
 
         /*
             Branch User
         */
         Route::post('branch/lists', 'User\UserBranchController@data')->name('UserBranch::list');
-        Route::get('branch/delete/{id}', 'User\UserBranchController@delete')->name('user_branch.delete');
+        Route::get('user_branch/delete/{id}', 'User\UserBranchController@destroy')->name('user_branch.delete');
         Route::resource('user_branch', 'User\UserBranchController');
 
         /**
          * Branch Master
          */
         Route::get('branch/master/lists', 'Branch\BranchController@data')->name('Branch::list');
+        Route::get('branch/delete/{id}', 'Branch\BranchController@destroy')->name('branch.delete');
         Route::resource('branch', 'Branch\BranchController');
 
         /**
          *  User Role
          */
         Route::get('role/data', 'Role\RoleController@data')->name('Role::data');
+        Route::get('role/delete/{id}', 'Role\RoleController@destroy')->name('role.delete');
         Route::resource('role', 'Role\RoleController');
 
         /*
             Branch User
         */
         Route::post('customer_service/lists', 'User\CustomerService@data')->name('CustomerService::list');
-        Route::get('customer_service/delete/{id}', 'User\CustomerService@delete')->name('CustomerService.delete');
+        Route::get('customer_service/delete/{id}', 'User\CustomerService@destroy')->name('CustomerService.delete');
         Route::resource('customer_service', 'User\CustomerService');
     });
 

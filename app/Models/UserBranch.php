@@ -11,7 +11,7 @@ use DB;
 class UserBranch extends Authenticatable
 {
     use HasLdapUser;
-    
+
     protected $guard = 'user_branch';
     protected $table = 'user_branchs';
     protected $guarded = [];
@@ -19,7 +19,7 @@ class UserBranch extends Authenticatable
 
     public function getFullNameAttribute()
     {
-        return $this->first_name.' '.$this->last_name;
+        return $this->first_name . ' ' . $this->last_name;
     }
 
     public function branch()

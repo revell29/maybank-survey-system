@@ -21,37 +21,40 @@ Route::get('logout', 'Auth\LoginController@logout');
 Route::group(['middleware' => 'auth:web'], function () {
     Route::get('/dashboard', 'Dashboard\DashboardController@index')->name('dashboard');
     Route::prefix('master')->group(function () {
-        
+
         /**
          *  User Route
          **/
         Route::get('user/lists', 'User\UserController@data')->name('User::list');
+        // Route::get('user/delete/{id}', 'User\UserController@destroy')->name('user.delete');
         Route::resource('user', 'User\UserController');
-        
+
         /*
             Branch User
         */
-        Route::get('branch/lists', 'User\UserBranchController@data')->name('UserBranch::list');
-        Route::get('branch/delete/{id}', 'User\UserBranchController@delete')->name('user_branch.delete');
+        Route::post('branch/lists', 'User\UserBranchController@data')->name('UserBranch::list');
+        // Route::get('user_branch/delete/{id}', 'User\UserBranchController@destroy')->name('user_branch.delete');
         Route::resource('user_branch', 'User\UserBranchController');
 
         /**
          * Branch Master
          */
         Route::get('branch/master/lists', 'Branch\BranchController@data')->name('Branch::list');
+        // Route::get('branch/delete/{id}', 'Branch\BranchController@destroy')->name('branch.delete');
         Route::resource('branch', 'Branch\BranchController');
 
         /**
          *  User Role
          */
         Route::get('role/data', 'Role\RoleController@data')->name('Role::data');
+        // Route::get('role/delete/{id}', 'Role\RoleController@destroy')->name('role.delete');
         Route::resource('role', 'Role\RoleController');
 
         /*
             Branch User
         */
-        Route::get('customer_service/lists', 'User\CustomerService@data')->name('CustomerService::list');
-        Route::get('customer_service/delete/{id}', 'User\CustomerService@delete')->name('CustomerService.delete');
+        Route::post('customer_service/lists', 'User\CustomerService@data')->name('CustomerService::list');
+        // Route::get('customer_service/delete/{id}', 'User\CustomerService@destroy')->name('CustomerService.delete');
         Route::resource('customer_service', 'User\CustomerService');
     });
 
@@ -65,7 +68,7 @@ Route::group(['middleware' => 'auth:web'], function () {
     Route::resource('report', 'Report\ReportController');
 
     /* Report User Branch */
-    Route::get('report_user/data', 'Report\UserBranchReport@data')->name('ReportUser::list');
+    Route::post('report_user/data', 'Report\UserBranchReport@data')->name('ReportUser::list');
     Route::post('report_user/data/detail', 'Report\UserBranchReport@detailList')->name('ReportUser::detailList');
     Route::get('report_user/detail/{id}', 'Report\UserBranchReport@detail')->name('ReportUser::detail');
     Route::get('report_user/data/export/detail', 'Report\UserBranchReport@exportSelect')->name('ReportUser::exportSelect');
@@ -92,7 +95,5 @@ Route::group(['middleware' => 'auth:user_branch'], function () {
 });
 
 Route::get('testing', function () {
-    $export = \App\Models\SurveiResult::query()->with('user')->where('teller_id', 1)->get();
-
-    return $export;
+    return \Carbon\Carbon::today();
 });

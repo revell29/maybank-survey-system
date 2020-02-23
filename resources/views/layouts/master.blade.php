@@ -75,7 +75,7 @@
 		</div>
 	</div>
 	<!-- /main navbar -->
-	
+
 	<!-- Page content -->
 	<div class="page-content">
 		@include('layouts.partial.sidebar')

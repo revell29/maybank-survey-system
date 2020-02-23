@@ -54,7 +54,7 @@
                     </a>
                 </li>
                 @endpermission
-                @permission('access_user_branch')
+                @permission('access_cs')
                 <li class="nav-item">
                     <a href="{{route('customer_service.index')}}" class="nav-link">
                         <i class="icon-users"></i>

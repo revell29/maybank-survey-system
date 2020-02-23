@@ -80,7 +80,7 @@
                 </div>
                 <div class="card-footer">
                     <div class="text-right">
-                        @permission(['create_user_branch','update_user_branch'])
+                        @permission(['create_cs','edit_cs'])
                         <button type="button" id="save" class="btn btn-md btn-primary pull-right">Submit</button>
                         @endpermission
                         <a href="{{route('customer_service.index')}}" class="btn btn-md btn-danger">Back</a>

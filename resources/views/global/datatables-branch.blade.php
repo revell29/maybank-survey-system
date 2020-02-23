@@ -83,7 +83,7 @@
                 confirm(table, 1, url, 'POST')
             } else if (option == 2) {
                 url = $('#data-table').data('url') + '/delete/' + ids;
-                confirm(table, 2, url, 'GET')
+                confirm(table, 2, url, 'GET') // Sebelum nya DELETE
             } else if (option == 3) {
                 url = $('#data-table').data('url') + '/remove/' + ids;
                 confirm(table, 3, url, 'DELETE')

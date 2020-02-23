@@ -93,25 +93,41 @@ class PermissionSeed extends Seeder
             [
                 'name' => 'access_log',
                 'display_name' => 'Access Log',
+            ],
+            [
+                'name' => 'access_cs',
+                'display_name' => 'Access Customer Service'
+            ],
+            [
+                'name' => 'create_cs',
+                'display_name' => 'Create Customer Service'
+            ],
+            [
+                'name' => 'edit_cs',
+                'display_name' => 'Edit Customer Service'
+            ],
+            [
+                'name' => 'delete_cs',
+                'display_name' => 'Delete Customer Service'
             ]
         ];
 
         foreach ($permissions as $permission) {
-            \App\Models\Permission::create([
+            \App\Models\Permission::updateOrCreate(['name' => $permission['name']], [
                 'name' => $permission['name'],
                 'display_name' => $permission['display_name']
             ]);
         }
 
-        \App\Models\Role::create(['name' => 'administrator','display_name' => 'Administrator','description' => '']);
-        \App\Models\User::create(['user_id'=>'USR1','username' => 'administrator','name' => 'super_admin','password' => bcrypt('administrator')]);
-            
+        \App\Models\Role::updateOrCreate(['name' => 'administrator'], ['name' => 'administrator', 'display_name' => 'Administrator', 'description' => '']);
+        \App\Models\User::updateOrCreate(['username' => 'administrator'], ['user_id' => 'USR1', 'username' => 'administrator', 'name' => 'super_admin', 'password' => bcrypt('administrator')]);
+
         $role = \App\Models\Role::whereName('administrator')->first();
         $perm = \App\Models\Permission::all()->pluck('id');
         $role->perms()->sync($perm);
 
-        $data1 = \App\Models\User::where('username','administrator')->first();
-        $data1->roles()->attach('1');
+        $data1 = \App\Models\User::where('username', 'administrator')->first();
+        // $data1->roles()->attach('1');    
 
         // DB::statement('set foreign_key_checks=1;');
     }

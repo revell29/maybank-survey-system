@@ -26,7 +26,7 @@ Route::group(['middleware' => 'auth:web'], function () {
          *  User Route
          **/
         Route::get('user/lists', 'User\UserController@data')->name('User::list');
-        Route::get('user/delete/{id}', 'User\UserController@destroy')->name('user.delete');
+        Route::get('user/delete/{id}', 'User\UserController@destroy')->name('user.delete'); // New Route
         Route::resource('user', 'User\UserController');
 
         /*
@@ -40,14 +40,14 @@ Route::group(['middleware' => 'auth:web'], function () {
          * Branch Master
          */
         Route::get('branch/master/lists', 'Branch\BranchController@data')->name('Branch::list');
-        Route::get('branch/delete/{id}', 'Branch\BranchController@destroy')->name('branch.delete');
+        Route::get('branch/delete/{id}', 'Branch\BranchController@destroy')->name('branch.delete'); // New Route
         Route::resource('branch', 'Branch\BranchController');
 
         /**
          *  User Role
          */
         Route::get('role/data', 'Role\RoleController@data')->name('Role::data');
-        Route::get('role/delete/{id}', 'Role\RoleController@destroy')->name('role.delete');
+        Route::get('role/delete/{id}', 'Role\RoleController@destroy')->name('role.delete'); // New Route
         Route::resource('role', 'Role\RoleController');
 
         /*

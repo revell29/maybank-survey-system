@@ -22,7 +22,7 @@
         </div>
 
         <div class="header-elements d-none">
-            @permission('create_user_branch')
+            @permission('create_cs')
             <a href="{{route('customer_service.create')}}" class="btn btn-labeled btn-labeled-left bg-primary">New
                 Customer
                 Service <b><i class="icon-add"></i></b></a>

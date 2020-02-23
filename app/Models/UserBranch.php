@@ -17,6 +17,10 @@ class UserBranch extends Authenticatable
     protected $guarded = [];
     protected $appends = ['full_name'];
 
+    protected $casts = [
+        'user_id' => 'array',
+    ];
+
     public function getFullNameAttribute()
     {
         return $this->first_name . ' ' . $this->last_name;

@@ -76,7 +76,7 @@ return [
         ],
 
         'user_branch' => [
-            'driver' => 'eloquent',
+            'driver' => 'ldap',
             'model' => App\Models\UserBranch::class,
             'table' => 'user_branchs'
         ],

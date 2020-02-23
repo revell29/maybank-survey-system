@@ -66,7 +66,7 @@ class BranchController extends Controller
                 'message' => $e->getMessage(),
                 'type' => 1
             ], 500);
-        } catch (\Exception $e) {
+        } catch (\Exception $exception) {
             return response()->json([
                 'message' => $exception->getMessage(),
                 'type' => '3',
